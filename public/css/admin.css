@@ -1,0 +1,123 @@
+:root {
+    --mainColor: #cd2b26;
+}
+
+body {
+    box-sizing: border-box;
+    justify-content: center;
+
+}
+
+nav {
+    width: 95%;
+    height: 10%;
+    min-height: 8%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+span div h3 {
+    color: #FF5050;
+}
+
+span div span {
+    font-weight: 300;
+    color: rgb(117, 117, 117);
+}
+
+.orderItem span button {
+    margin: 5px;
+
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.cancelButton {
+    background-color: rgb(202, 202, 202);
+}
+
+.deleteButton, .selectStoreButton {
+    background-color: rgb(255, 108, 50) !important;
+}
+
+.selected{
+    background-color: #ffc313 !important;
+}
+
+.sendMessageContainer {
+    height: fit-content;
+    display: flex;
+    background-color: #00000000;
+}
+
+.sendMessageContainer textarea {
+    min-height: 200px;
+    min-width: 230px;
+    background-color: rgba(0, 0, 0, 0.171);
+}
+
+#sendMessage {
+    height: fit-content;
+    height: 60px;
+    width: 80px;
+    text-align: center;
+}
+
+
+input,
+textarea {
+    border: 2px solid rgba(255, 255, 255, 0.082);
+    border-radius: 12px;
+    width: 70%;
+    height: 40px;
+    text-align: center;
+    padding: 4px;
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0.171);
+    fill: none;
+}
+
+.productContainer{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.screenbutton{
+    border: none;
+    background-color: #ffc313;
+    
+}
+
+.scrollable{
+    overflow-y: scroll;
+}
+
+#saveStore{
+    background-color: white;
+}
+
+button .spinner{
+    max-height: 12px !important;
+    max-width: 12px !important;  
+    padding: 0;
+    margin: 0;
+}
+
+button .spinner .spinnerSection{
+    color: white !important;
+    max-height: 12px !important;
+    max-width: 12px !important;
+    padding: 0;
+    margin: 0;
+}
+
+#postTagsContainer{
+    max-height: 180px;
+    overflow-y: scroll;
+  }
+  

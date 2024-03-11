@@ -1,0 +1,15 @@
+<div class="modal active" id="login">
+  <div class="header">
+    <h2 style="text-align: center; width:100%">Snackbin Adminstrator Login</h2>
+  </div>
+{{#if message}}
+<h5>{{message}}</h5>
+{{/if}}
+  <form class="modalContent" method="post" action="/auth/adminLogin">
+    <input type="email" name="emailAddress" value="{{#if email}}
+{{email}}
+{{else}}chisalecharles23@gmail.com{{/if}}" id="lnumber" placeholder="email address" />
+    <input type="password" value="ass" name="password" id="lpassword" placeholder="password" />
+    <button style="text-align: center; width:50%" id="signIn"><span>Login</span></button>
+  </form>
+</div>

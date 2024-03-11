@@ -1,0 +1,786 @@
+
+<div style="margin-top: 10%; font-size:26px; text-align:center;">Snackbin
+  
+  Central Control🛠</div>
+
+<h3 id="onSubmitResponse">{{response}}</h3>
+
+<div class="screensContainer">
+  <h3 style="text-align: start; min-width: 100%;">Home</h3>
+
+  <div class="screenButton" id="messages">Inbox<br />📬</div>
+  <div class="screenButton" id="createProduct">Post<br />🔨</div>
+  <div class="screenButton" id="sendPromoMessages">Message<br />📧</div>
+  <div class="screenButton" id="createStore">Create Supplier<br />🏪</div>
+  <div class="screenButton" id="createDeliveryPerson">Create Deliverer<br />🏪</div>
+  <div class="screenButton" id=""><a href="/">Logout<br /> 🏠</a></div>
+  <div class="screenButton" id="toggleStore">Manage Suppliers<br />🛠</div>
+  <div class="screenButton" id="manageDelivery">Manage Deliverers<br />🛠</div>
+
+  <h3 style="text-align: start; min-width: 100%;">Orders</h3>
+  <div class="screenButton" id="processed">Processed<br />👍</div>
+  <div class="screenButton" id="pending">Pending<br />⏳</div>
+  <div class="screenButton" id="cancelled">Cancelled<br />❌</div>
+  <div class="screenButton" id="deleted">Deleted<br />🚮</div>
+
+  <h3 style="text-align: start; min-width: 100%;">Stats</h3>
+  <div class="screenButton" id="viewSales">Sales<br />💸</div>
+  <div class="screenButton" id="viewUsers">Users<br />👤</div>
+  <div class="screenButton" id="viewProducts">Products 👀</div>
+
+</div>
+
+
+<div class="screen" id="processed">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Processed Orders</div>
+  </nav>
+  <div style="overflow-y: auto;" class="productContainer">
+    {{#each processedOrders}}
+     <div class="orderItem">
+        <span>
+          <div>
+            <h3>Detail</h3>
+            <span>
+              {{#each Cart}}
+                x{{quantity}}
+                {{productName}},
+              {{/each}}
+            </span>
+          </div>
+          <br>
+          <div>
+            <h3>Cost <div>K{{orderPrice}}</div></h3>
+            
+          </div>
+          <div>
+            <div>Name: {{userName}}</div>
+          <div>Phone: {{phoneNumber}}</div>
+          </div>
+        </span>
+        <span>
+          <div>
+            <h3>Status</h3>
+            <span>{{orderStatus}}</span>
+          </div>
+             <div>
+              {{#if delivery}}
+
+            <h3>Delivery Address</h3>
+            <div>{{deliveryAddress}}</div>
+              {{/if}}
+              
+          </div>
+              
+         
+          <button class="pendingButton" id="{{_id}}">Undo Process</button>
+          <button class="cancelButton" id="{{_id}}">Cancel</button>
+          <button class="deleteButton" id="{{_id}}">Delete</button>
+          <button class="eraseButton" id="{{_id}}">Erase</button>
+          
+        </span>
+        <span id={{userId}}>
+
+       <div>
+         <h3>Order Notes</h3>
+          <h5>"{{orderNotes}}"</h5>
+          <div>
+            <h3>Time</h3>
+            <span>{{timeStamp}}</span>
+          </div>
+       </div>
+          
+        </span>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+
+
+<div class="screen" id="pending">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Pending Orders</div>
+  </nav>
+
+  <div style="overflow-y: auto;" class="productContainer">
+    {{#each pendingOrders}}
+      <div class="orderItem">
+        <span>
+          <div>
+            <h3>Detail</h3>
+            <span>
+              {{#each Cart}}
+                x{{quantity}}
+                {{productName}},
+              {{/each}}
+            </span>
+          </div>
+          <br>
+          <div>
+            <h3>Cost <div>K{{orderPrice}}</div></h3>
+            
+          </div>
+          <div>
+            <div>Name: {{userName}}</div>
+          <div>Phone: {{phoneNumber}}</div>
+          </div>
+        </span>
+        <span>
+          <div>
+            <h3>Status</h3>
+            <span>{{orderStatus}}</span>
+          </div>
+             <div>
+              {{#if delivery}}
+
+            <h3>Delivery Address</h3>
+            <div>{{deliveryAddress}}</div>
+              {{/if}}
+              
+          </div>
+              
+         
+          <button class="processButton" id="{{_id}}">Process</button>
+          <button class="cancelButton" id="{{_id}}">Cancel</button>
+          <button class="deleteButton" id="{{_id}}">Delete</button>
+          <button class="eraseButton" id="{{_id}}">Erase</button>
+          
+        </span>
+        <span id={{userId}}>
+
+       <div>
+         <h3>Order Notes</h3>
+          <h5>"{{orderNotes}}"</h5>
+          <div>
+            <h3>Time</h3>
+            <span>{{timeStamp}}</span>
+          </div>
+       </div>
+          
+        </span>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<div class="screen" id="cancelled">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Cancelled Orders</div>
+  </nav>
+  <div style="overflow-y: auto;" class="productContainer">
+    {{#each canceledOrders}}
+     <div class="orderItem">
+        <span>
+          <div>
+            <h3>Detail</h3>
+            <span>
+              {{#each Cart}}
+                x{{quantity}}
+                {{productName}},
+              {{/each}}
+            </span>
+          </div>
+          <br>
+          <div>
+            <h3>Cost <div>K{{orderPrice}}</div></h3>
+          </div>
+          <div>
+            <div>Name: {{userName}}</div>
+          <div>Phone: {{phoneNumber}}</div>
+          </div>
+        </span>
+        <span>
+          <div>
+            <h3>Status</h3>
+            <span>{{orderStatus}}</span>
+          </div>
+             <div>
+              {{#if delivery}}
+
+            <h3>Delivery Address</h3>
+            <div>{{deliveryAddress}}</div>
+              {{/if}}
+              
+          </div>
+              
+         
+        
+          <button class="pendingButton" id="{{_id}}">Undo Cancel</button>
+            <button class="deleteButton" id="{{_id}}">Delete</button>
+          <button class="eraseButton" id="{{_id}}">Erase</button>
+         
+        </span>
+        <span id={{userId}}>
+
+       <div>
+         <h3>Order Notes</h3>
+          <h5>"{{orderNotes}}"</h5>
+          <div>
+            <h3>Time</h3>
+            <span>{{timeStamp}}</span>
+          </div>
+       </div>
+          
+        </span>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<div class="screen" id="deleted">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Deleted Orders</div>
+  </nav>
+  <div style="overflow-y: auto;" class="productContainer">
+    {{#each deletedOrders}}
+      <div class="orderItem">
+       <span>
+          <div>
+            <h3>Details</h3>
+            <span>
+              {{#each Cart}}
+                x{{quantity}}
+                {{itemName}},
+              {{/each}}
+            </span>
+          </div>
+          <div>
+            <h3>Cost <div>K{{orderPrice}}</div></h3>
+            
+          </div>
+                     <div>Name: {{userName}}</div>
+          <div>Phone: {{phoneNumber}}</div>
+        </span>
+        <span>
+          <div>
+            <h3>Status</h3>
+            <span>{{orderStatus}}</span>
+          </div>
+          <div>
+              {{#if delivery}}
+
+            <h3>Delivery Address</h3>
+            <div>{{deliveryAddress}}</div>
+              {{/if}}
+              
+          </div>
+          
+          <button class="cancelButton" id="{{_id}}">Cancel</button>
+        </span>
+        <span id={{userId}}>
+
+          <div>
+            <h3>Time</h3>
+            <span>{{timeStamp}}</span>
+          </div>
+          <div id="Deleted">
+            <h3>Delivery</h3>
+            <span>{{delivery}}</span>
+          </div>
+          
+          <button class="eraseButton" id="{{_id}}">Erase</button>
+        </span>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<div class="screen" id="createProduct">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Create New Product</div>
+  </nav>
+  <h4 id="errorField"></h4>
+  <form
+    action="/admin/uploadItem"
+    method="post"
+    enctype="multipart/form-data"
+    id="productForm"
+  >
+  <h3>Select Supplier</h3>
+  <div>
+ <select name="supplierId" required>
+    {{#each suppliers}}
+      <option value="{{{_id}}}">{{{supplierName}}}</option>
+    {{/each}}
+  </select>
+  </div>
+ <br>
+    <input type="text" name="productName" placeholder="Product Name" id="productName" />
+    <input
+      type="Number"
+      name="productPrice"
+      placeholder="Product Price"
+      id="productPrice"
+    />
+
+    <div
+      style="display:flex; justify-content:center; flex-direction: row; width:fit-content;"
+    >
+      <div class="inputField">
+        <input type="file" name="photos" class="imageUrl" id="imageUrl1" />
+        <h5>Attach Image</h5>
+      </div>
+
+      <div class="inputField">
+        <input type="file" name="photos" class="imageUrl" id="imageUrl2" />
+        <h5>Attach Image</h5>
+      </div>
+
+      <div class="inputField">
+        <input type="file" name="photos" class="imageUrl" id="imageUrl3" />
+        <h5>Attach Image</h5>
+      </div>
+
+    </div>
+    <input
+      type="text"
+      id="productTags"
+      name="productTags"
+      placeholder="Select tags Below"
+    />
+    <div class="tagContainer postTagsContainer" id="postTagsContainer">
+       <div class="tagOption" id="meal">
+        meal🥪
+      </div>
+      <div class="tagOption" id="sandwich">
+        sandwiches🥪
+      </div>
+       <div class="tagOption" id="pie">
+        pie🥪
+      </div>
+       <div class="tagOption" id="shawarma">
+        shawarma🥪
+      </div>
+       <div class="tagOption" id="samomsa">
+        samosa
+      </div>
+       <div class="tagOption" id="dondo">
+        dondo
+      </div>
+       <div class="tagOption" id="fritter">
+        fritter
+      </div>
+      <div class="tagOption" id="muffin">
+        muffins🧁
+      </div>
+      <div class="tagOption" id="vegan">
+        vegan 🥗
+      </div>
+      <div class="tagOption" id="fried">
+        fried
+      </div>
+      <div class="tagOption" id="snack">
+        snacks🍫
+      </div>
+      <div class="tagOption" id="baked">
+        baked
+      </div>
+      <div class="tagOption" id="toasted">
+        toasted
+      </div>
+      <div class="tagOption" id="fries">
+        potato fries
+      </div>
+      <div class="tagOption" id="drink">
+        drinks🥤
+      </div>
+      <div class="tagOption" id="meat">
+        meat🍖
+      </div>
+      <div class="tagOption" id="beef">
+        beef🍖
+      </div>
+      <div class="tagOption" id="chicken">
+        chicken🍖
+      </div>
+      <div class="tagOption" id="chocolate">
+        chocolate🍫
+      </div>
+       <div class="tagOption" id="vanilla">
+        vanilla🥪
+      </div>
+      
+      <div class="tagOption" id="fruit">
+        fruits🍒
+      </div>
+      <div class="tagOption" id="biscuit">
+        biscuits🍪
+      </div>
+      
+       <div class="tagOption" id="hungerLow">
+        HungerLow
+      </div>
+      <div class="tagOption" id="hungerMild">
+        Hunger Mild
+      </div>
+       <div class="tagOption" id="hungerMid">
+        Hunger Mid
+      </div>
+      <div class="tagOption" id="hungerHigh">
+        Hunger High
+      </div>
+    <div class="tagOption" id="tasteSweet">
+    Taste Sweet
+      </div>
+      <div class="tagOption" id="tasteMeaty">
+        Taste Meaty
+      </div>
+       <div class="tagOption" id="tasteFullCourse">
+      Taste Full Course
+      </div>
+
+      <div class="tagOption" id="drinkCarbonatedDrink">
+       Carbonated Drink
+      </div>
+       <div class="tagOption" id="drinkFruitDrink">
+        Fruit Drink
+      </div>
+      
+    </div>
+    
+    <input
+      type="text"
+      name="productClass"
+      placeholder="Product Class"
+      id="productClass"
+    />
+    <textarea
+      type="text"
+      name="productInfo"
+      placeholder="Product Info"
+      id="productInfo"
+    ></textarea>
+    <button id="saveProduct" type="submit">Save</button>
+  </form>
+</div>
+
+<form method="post" action="/updateStore" class="screen" id="toggleStore">
+  <nav>
+    <span>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <span class="homeButton"></span>
+    </span>
+    <span>Supplier Settings</span>
+  </nav>
+ 
+<div style="overflow-y: auto;" class="productContainer">
+  <br>
+  
+{{#each suppliers}}
+  <div class="userItem">
+   
+
+    {{{supplierName}}}
+    {{{accountState}}}
+    {{{promoText}}}
+  <input type="hidden" id="storeId"/>
+   
+      <div class="selectStoreButton" id="{{_id}}">Select</div>
+    
+  </div>
+{{/each}}
+
+      </div>
+
+  <input type="hidden" id="storeId" placeholder="storeId" />
+  <textarea
+    name=""
+    id="promoText"
+    cols="25"
+    rows="30"
+    placeholder="Change Promo Message"
+    style="height: 140px; border-raduis:7px;"
+  ></textarea>
+  <div id="openStore">Activate</div>
+  <div id="closeStore">Disable</div>
+  <div id="setStoreMessage">Set Store Message</div>
+
+</form>
+
+<div class="screen" id="viewProducts">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>All Products</div>
+  </nav>
+  <div class="scrollable">
+    {{#each products}}
+      
+        <div style="overflow-y: auto;" class="productContainer">
+          <div class="productItem">
+            <div>
+              <img src="{{mainImage}}" alt="" srcset="">
+            </div>
+            {{productName}}
+            
+            <form action="admin/deleteProduct/{{_id}}" method="post">
+              <button class="deleteButton">Delete</button>
+            </form>
+        
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<div class="screen" id="viewUsers">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>All Users</div>
+  </nav>
+  <div class="users scrollable">
+    {{#each users}}
+      <div class="userContainer">
+        <div class="userItem">
+          <span>
+            <div>
+              <h3>Name</h3>
+              <div>{{userName}}</div>
+              <h3>Number</h3>
+              <div>{{userNumber}}</div>
+              <h3>Adress</h3>
+              <div>{{userAddress}}</div>
+            </div>
+
+          </span>
+          <span>
+            <div>
+              <h3>Email</h3>
+              <div>{{email}}</div>
+
+              <h3>Id</h3>
+              <div>{{_id}}</div>
+            </div>
+            <div>
+              <button class="deleteButton">Disable Account</button>
+              <button class="deleteButton">Erase Account</button>
+            </div>
+          </span>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<div class="screen" id="viewSales">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Sales Statistics</div>
+  </nav>
+</div>
+
+<div class="screen" id="sendPromoMessages">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Send Message</div>
+  </nav>
+  <div>
+    <div>Send a public message...</div>
+    <form
+      action="/admin/sendPublicMessage"
+      class="sendMessageContainer"
+      method="post"
+    >
+      <input type="text" placeholder="message Title" name="messageTitle" />
+      <input type="text" name="from" id="" placeholder="message from" />
+      <textarea
+        name="messageBody"
+        id="messageBody"
+        cols="35"
+        rows="40"
+        placeholder="message body"
+      ></textarea>
+      <button type="submit" id="sendMessage">
+        Send Message
+      </button>
+    </form>
+
+  </div>
+</div>
+
+<div class="screen" id="messages">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Messages</div>
+  </nav>
+  <div class="notifications">
+    {{#each userMessages}}
+      <div class="notificationContainer">
+        <div class="notificationItem">
+          <h3>User Message</h3>
+          <span>
+            "{{text}}"
+          </span>
+          <div class="notificationOptions">
+            <span>
+              <h3>From:</h3>
+              <div>{{senderName}}</div>
+              <h3>Cell:</h3>
+              <div>{{senderNumber}}</div>
+            </span>
+            <div>
+              <button class="deleteButton">Mark Read</button>
+
+              <form action="/admin/replyUser" method="post">
+                <input type="hidden" name="userId" value="{{userId}}" />
+                <textarea name="replyText" id="" cols="30" rows="10"></textarea>
+                <button type="submit">
+                  Reply
+                </button>
+              </form>
+
+            </div>
+            <div>
+              <h3>Date</h3>
+              <div class="notiDate">
+                {{date}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {{/each}}
+  </div>
+</div>
+
+<div class="screen" id="createStore">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Create Supplier</div>
+  </nav>
+  <div>
+    <form
+      action="/admin/createSupplier"
+      method="post"
+      style="display: flex; flex-direction:column; align-items:center; "
+    >
+      <input type="text" name="supplierName" placeholder="Store Name" />
+      <input type="text" name="supplierLocation" placeholder="supplierLocation" />
+      <input type="email" name="emailAddress" placeholder="Supplier Email" />
+     
+      <input
+        type="password"
+        name="phoneNumber"
+        placeholder="phoneNumber"
+      />
+         <input
+        type="password"
+        name="password"
+        placeholder="password"
+      />
+
+
+      <textarea
+        name="promoText"
+        placeholder="Store Info"
+        cols="30"
+        rows="15"
+      ></textarea>
+
+      <button class="createStore" type="submit">Create Supplier</button>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="modal" id="notiModal">
+  <div class="header">
+    <h3>Notification</h3>
+    <span class="closeButton">&times;</span>
+  </div>
+  <div class="modalContent">
+  </div>
+</div>
+
+
+<div class="screen" id="manageDelivery">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Manage Delivery People</div>
+  </nav>
+{{#each deliveryPeople}}
+
+<div class="orderItem">
+  {{userName}}
+  {{userAddress}}
+  {{emailAddress}}
+  {{accountStatus}}
+  {{workStatus}}
+  <form action="/admin/deleteDeliveryPerson/{{_id}}" method="post">
+<button class="deleteButton">Delete</button>
+  </form>
+</div>
+
+{{/each}}
+
+</div>
+
+<div class="screen" id="createDeliveryPerson">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Create Delivery Person</div>
+  </nav>
+  <br>
+  <br>
+    <form action="/admin/createDeliveryPerson" method="post">
+    <input type="text" name="userName" placeholder="User Name">
+    <input type="text" name="phoneNumber" placeholder="Phone Number">
+  <input type="email" name="emailAddress" id="" placeholder="Email Address">
+   <input type="text" name="userAddress" placeholder="User Address">
+       <input
+        type="password"
+        name="password"
+        placeholder="Password"
+      />
+
+<button class="createStore" type="submit">Create Deliverer</button>
+    </form>
+</div>
+
+<div class="overLay"></div>

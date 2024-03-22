@@ -7,6 +7,7 @@ const amodals = document.querySelectorAll('.modal');
 const selectStoreButtons = document.querySelectorAll('.selectStoreButton')
 
 const aoverLay = document.querySelector('.overLay');
+
 adminScreenButtons.forEach((button) => {
     button.addEventListener('click', () => {
         adminScreens.forEach((adminScreen) => {
@@ -37,22 +38,30 @@ const closeStore = document.getElementById('closeStore')
 
 const openStore = document.getElementById('openStore')
 
+const deleteStore = document.getElementById('deleteStore')
+
+
 const setMessage = document.getElementById('setStoreMessage')
 
 closeStore.addEventListener('click', () => {
-    setStoreState(`Shop Closed`);
+    setStoreState(`Disabled`);
 
 })
 
 
 openStore.addEventListener('click', () => {
-    setStoreState(`Shop Open`);
+    setStoreState(`Active`);
 })
 
-setMessage.addEventListener('click', () => {
-    let text = document.getElementById('promoText').value
-    setStoreMessage(text);
+
+deleteStore.addEventListener('click', () => {
+    deleteSupplier()
 })
+
+// setMessage.addEventListener('click', () => {
+//     let text = document.getElementById('promoText').value
+//     setStoreMessage(text);
+// })
 
 
 const inputFields = document.querySelectorAll('.imageUrl')
@@ -88,6 +97,21 @@ async function setStoreState(state) {
     showNoti(data.response)
 }
 
+async function deleteSupplier() {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            storeId: document.getElementById('storeId').value,
+
+        })
+    }
+    const res = await fetch('/admin/deleteSupplier', options);
+    const data = await res.json()
+    showNoti(data.response)
+}
 
 async function setStoreMessage(text) {
     const options = {

@@ -121,3 +121,66 @@ button .spinner .spinnerSection{
     overflow-y: scroll;
   }
   
+  .deliveryPerson{
+    margin: 4px;
+    padding: 10px;
+    background-color: wheat;
+    border-radius: 15px;
+  }
+  .deliveryPerson span{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .greenButton{
+    background-color: rgb(77, 201, 93);
+  }
+
+  .orangeButton{
+    background-color: rgb(255, 152, 114);
+  }
+
+  .supplierItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .supplierItem span{
+
+  }
+
+  .yscrollable{
+    max-height: 75%;
+    overflow-y: scroll;
+
+  }
+
+  .deliverersContainer{
+
+  }
+
+  .supplierItem{
+    background-color: wheat;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .suppliersContainer{
+
+width: 90%;
+display: flex;
+flex-direction: column;
+min-height: 50%;
+padding: 10px;
+align-items: center;
+  }
+
+ .users{
+    width: 85%;
+ }

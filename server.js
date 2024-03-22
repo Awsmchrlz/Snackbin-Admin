@@ -86,8 +86,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
-
 const adminPassportConfig = require('./config/passport');
 
 adminPassportConfig(passport);

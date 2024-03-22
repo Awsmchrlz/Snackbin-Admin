@@ -213,7 +213,7 @@ body {
 
     min-height: fit-content;
 
-    width: 95%;
+    width: 100%;
 }
 
 .orderItem,
@@ -1041,7 +1041,7 @@ a {
 
 .screensContainer .screenButton,
 #saveProduct,
-#toggleStore div,
+#toggleStore .buttonHolder,
 .createStore {
     display: flex;
     align-items: center;

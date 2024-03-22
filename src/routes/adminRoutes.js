@@ -74,10 +74,16 @@ router.get('/', async(req, res) => {
   const users = await User.find({}).lean()
   const messages = await Messages.find({}).lean()
   const deliveryPeople = await DeliveryPerson.find({}).lean()
+  const products = await Product.find({}).lean();
+
+
+  const supplierCount = suppliers.length;
+  const userCount = users.length;
+  const deliveryPersonCount = deliveryPeople.length;
+  const productCount = products.length;
+
 
     
-    const products = await Product.find({}).lean();
-
     const deletedOrders = await Order.find({
       $and: [
           { orderStatus: "Deleted" },
@@ -120,12 +126,14 @@ router.get('/', async(req, res) => {
           products,
           processedOrders,
           suppliers,
-          deliveryPeople
+          deliveryPeople,
+          userCount,
+          supplierCount,
+          deliveryPersonCount,
+          productCount
         });
       });
     
-
-
 
 router.post('/uploadItem', upload.array('photos', 3), async (req, res) => {
   console.log("koo")
@@ -157,10 +165,14 @@ router.post('/uploadItem', upload.array('photos', 3), async (req, res) => {
       mainImage:imageUrls[0],
       supplierId,
     })
-    newProduct.save();
-res.redirect('/')
-  }catch{
-    res.redirect('/') 
+    newProduct.save().then((done)=>{
+
+      console.log(done)
+      res.redirect('/supplier')
+    })
+  }catch(err){
+    console.log(err)
+    res.redirect('/supplier') 
   }
 });
 
@@ -273,11 +285,14 @@ router.post('/setSupplierState', (req, res) => {
   });
 });
 
+
 router.post('/setSupplierMessage', (req, res) => {
+ 
   const {
     storeId,
     promoText
   } = req.body;
+
   console.log(storeId);
 
  SnackbinSupplier.updateOne({
@@ -341,6 +356,57 @@ router.post('/createSupplier', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+router.post('/deleteSupplier', async (req, res) => {
+  const {storeId}= req.body;
+  SnackbinSupplier.deleteOne({_id:storeId}).then((done)=>{
+    res.json({
+      response: `Deleted Successfully, refresh the page.`
+    });
+  }).catch((er)=>{
+    res.json({
+      response: `Supplier Does Not Exist`
+    });
+  })
+});
+
+router.post('/deleteDeliveryPerson', async (req, res) => {
+  const {storeId}= req.body;
+  SnackbinSupplier.deleteOne({_id:storeId}).then((done)=>{
+    res.json({
+      response: `Deleted Successfully, refresh the page.`
+    });
+  }).catch((er)=>{
+    res.json({
+      response: `Delivery Person Does Not Exist`
+    });
+  })
+});
+
+router.post('/DeliveryPerson', async (req, res) => {
+  DeliveryPerson.updateOne({
+    _id: storeId
+  }, {
+    $set: {
+      accountState:accountState
+    }
+  }).then(ress => {
+    console.log(ress)
+    if (ress.matchedCount > 0) {
+      res.json({
+        response: `Sele updated to ${accountState}`
+      });
+    } else {
+      res.json({
+        response: `Select A Supplier to update`
+      });
+    }
+  }).catch(err => {
+    res.json(err);
+  });
+});
+
 
 function deleteFiles(filePaths) {
   filePaths.forEach(file => {
@@ -410,6 +476,55 @@ console.log(userId)
     console.error('Error deleting delivery person:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+
+})
+
+router.post('/activateDeliveryPerson/:userId',async (req,res)=>{
+  const userId = req.params.userId;
+console.log(userId)
+  try {
+    // Find the delivery person by userId and delete them
+    const deliveryPerson = await DeliveryPerson.findOne({_id:userId});
+
+    if (deliveryPerson) {
+      deliveryPerson.accountStatus = 'Active'
+      deliveryPerson.save()
+      console.log('Delivery person activate successfully:', deliveryPerson);
+      res.redirect('/admin');
+      // res.json({ message: 'Delivery person activate successfully' });
+    } else {
+      console.log('Delivery person not found');
+      res.status(404).json({ error: 'Delivery person not found' });
+    }
+  } catch (error) {
+    console.error('Error updating delivery person:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+})
+
+
+router.post('/disableDeliveryPerson/:userId',async (req,res)=>{
+  const userId = req.params.userId;
+  console.log(userId)
+    try {
+      // Find the delivery person by userId and delete them
+      const deliveryPerson = await DeliveryPerson.findOne({_id:userId});
+  
+      if (deliveryPerson) {
+        deliveryPerson.accountStatus = 'Disabled'
+        deliveryPerson.save()
+        console.log('Delivery person disabled successfully:', deliveryPerson);
+        res.redirect('/admin');
+        // res.json({ message: 'Delivery person activate successfully' });
+      } else {
+        console.log('Delivery person not found');
+        res.status(404).json({ error: 'Delivery person not found' });
+      }
+    } catch (error) {
+      console.error('Error updating delivery person:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
 
 })
 

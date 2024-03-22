@@ -13,8 +13,9 @@
   <div class="screenButton" id="sendPromoMessages">Message<br />📧</div>
   <div class="screenButton" id="createStore">Create Supplier<br />🏪</div>
   <div class="screenButton" id="createDeliveryPerson">Create Deliverer<br />🏪</div>
-  <div class="screenButton" id=""><a href="/">Logout<br /> 🏠</a></div>
   <div class="screenButton" id="toggleStore">Manage Suppliers<br />🛠</div>
+  <div class="screenButton" id="viewUsers">Users<br />👤</div>
+  <div class="screenButton" id="viewProducts">Products 👀</div>
   <div class="screenButton" id="manageDelivery">Manage Deliverers<br />🛠</div>
 
   <h3 style="text-align: start; min-width: 100%;">Orders</h3>
@@ -24,9 +25,8 @@
   <div class="screenButton" id="deleted">Deleted<br />🚮</div>
 
   <h3 style="text-align: start; min-width: 100%;">Stats</h3>
-  <div class="screenButton" id="viewSales">Sales<br />💸</div>
-  <div class="screenButton" id="viewUsers">Users<br />👤</div>
-  <div class="screenButton" id="viewProducts">Products 👀</div>
+  <div class="screenButton" id="allStats">All Statistics<br />💸</div>
+  <div class="screenButton" id=""><a href="/">Logout<br /> 🏠</a></div>
 
 </div>
 
@@ -475,7 +475,7 @@
   </form>
 </div>
 
-<form method="post" action="/updateStore" class="screen" id="toggleStore">
+<div method="post" action="/updateStore" class="screen" id="toggleStore">
   <nav>
     <span>
       <object data="/css/svg/back.svg" type="image/svg+xml"></object>
@@ -484,39 +484,41 @@
     <span>Supplier Settings</span>
   </nav>
  
-<div style="overflow-y: auto;" class="productContainer">
-  <br>
+  {{{supplierCount}}} Suppliers
+<div class="scrollable suppliersContainer">
   
 {{#each suppliers}}
-  <div class="userItem">
+  <span class="supplierItem">
    
-
-    {{{supplierName}}}
-    {{{accountState}}}
-    {{{promoText}}}
+<br>
+    <span>User Name:{{{supplierName}}}</span>
+    <span>Status: {{{accountState}}}</span>
+    <span>Phone Number:{{{phoneNumber}}}</span>
+  <span>Email:{{{emailAddress}}}</span>
+  
   <input type="hidden" id="storeId"/>
-   
-      <div class="selectStoreButton" id="{{_id}}">Select</div>
+   <br>
+      <button class="selectStoreButton" id="{{_id}}">Select</button>
     
-  </div>
+  </span>
 {{/each}}
 
       </div>
 
   <input type="hidden" id="storeId" placeholder="storeId" />
-  <textarea
-    name=""
-    id="promoText"
-    cols="25"
-    rows="30"
-    placeholder="Change Promo Message"
-    style="height: 140px; border-raduis:7px;"
-  ></textarea>
-  <div id="openStore">Activate</div>
-  <div id="closeStore">Disable</div>
-  <div id="setStoreMessage">Set Store Message</div>
+ <br>
+ <br>
+ <br>
+ <br>
+ <br>
+ <br>
+  <div class="buttonHolder">
+    <button class="greenButton" id="openStore">Activate</button>
+  <button class="orangeButton" id="closeStore">Disable</button>
+<button class="deleteButton" id="deleteStore">Delete</button>
 
-</form>
+  </div>
+</div>
 
 <div class="screen" id="viewProducts">
   <nav>
@@ -526,6 +528,7 @@
     </div>
     <div>All Products</div>
   </nav>
+  {{{productCount}}} products uploaded
   <div class="scrollable">
     {{#each products}}
       
@@ -554,6 +557,7 @@
     </div>
     <div>All Users</div>
   </nav>
+  {{{userCount}}} Users
   <div class="users scrollable">
     {{#each users}}
       <div class="userContainer">
@@ -572,13 +576,10 @@
           <span>
             <div>
               <h3>Email</h3>
-              <div>{{email}}</div>
-
-              <h3>Id</h3>
-              <div>{{_id}}</div>
+              <div>{{emailAddress}}</div>
             </div>
-            <div>
-              <button class="deleteButton">Disable Account</button>
+            <div class="userButtonHolder">
+              <button class="orangeButton">Disable Account</button>
               <button class="deleteButton">Erase Account</button>
             </div>
           </span>
@@ -588,7 +589,7 @@
   </div>
 </div>
 
-<div class="screen" id="viewSales">
+<div class="screen" id="allStats">
   <nav>
     <div>
       <object data="/css/svg/back.svg" type="image/svg+xml"></object>
@@ -639,7 +640,7 @@
     <div>Messages</div>
   </nav>
   <div class="notifications">
-    {{#each userMessages}}
+    {{#each messages}}
       <div class="notificationContainer">
         <div class="notificationItem">
           <h3>User Message</h3>
@@ -741,20 +742,34 @@
     </div>
     <div>Manage Delivery People</div>
   </nav>
+  {{{deliveryPersonCount}}} Delivery people
+  <div class="scrollable deliverersContainer">
+    
 {{#each deliveryPeople}}
 
-<div class="orderItem">
-  {{userName}}
-  {{userAddress}}
-  {{emailAddress}}
-  {{accountStatus}}
-  {{workStatus}}
+<div class="deliveryPerson">
+  <br>
+  <span>User Name: {{userName}}</span>
+  <span>Address: {{userAddress}}</span>
+  <span>Phonenumber: {{phoneNumber}}</span>
+  <span>Email Address: {{emailAddress}}</span>
+  <span>Account Status: {{accountStatus}}</span>
+<br>
+<span>
+  <form action="/admin/activateDeliveryPerson/{{_id}}" method="post">
+<button class="greenButton">Activate</button>
+  </form>
+    <form action="/admin/disableDeliveryPerson/{{_id}}" method="post">
+<button class="orangeButton">Disable</button>
+  </form>
   <form action="/admin/deleteDeliveryPerson/{{_id}}" method="post">
 <button class="deleteButton">Delete</button>
   </form>
+</span>
 </div>
 
 {{/each}}
+  </div>
 
 </div>
 

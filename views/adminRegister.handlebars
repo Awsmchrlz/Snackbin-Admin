@@ -1,0 +1,16 @@
+<div class="modal active" id="login">
+  <div class="header">
+    <h2 style="text-align: center; width:100%">Snackbin Adminstrator Register</h2>
+  </div>
+{{#if message}}
+<h5>{{message}}</h5>
+{{/if}}
+  <form class="modalContent" method="post" action="/auth/adminRegister">
+  <input type="text" name="userName" id="lnumber" placeholder="User Name" />
+
+    <input type="email" name="emailAddress" id="lnumber" placeholder="email address" />
+
+    <input type="password" name="password" id="lpassword" placeholder="password" />
+    <button style="text-align: center; width:50%" id="signIn"><span>Register</span></button>
+  </form>
+</div>

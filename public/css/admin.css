@@ -43,6 +43,9 @@ span div span {
     background-color: rgb(255, 108, 50) !important;
 }
 
+.redButton{
+    background-color: rgb(255, 108, 50) !important;
+}
 .selected{
     background-color: #ffc313 !important;
 }

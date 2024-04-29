@@ -45,11 +45,11 @@ const { ensureAdminAuthenticated } = require("./config/auth");
 
 
 const MONGO_DB_URL =  process.env.MONGO_DB_URL
-const liveurl = "mongodb+srv://tongabull:tongabullpassword@clu  ster0.l0puhny.mongodb.net/?retryWrites=true&w=majority"
+const liveDB = "mongodb+srv://tongabull:tongabullpassword@cluster0.l0puhny.mongodb.net/?retryWrites=true&w=majority"
 const localDB = 'mongodb://localhost:27017/tongabull'
 mongoose.set('strictQuery', true);
 
-mongoose.connect(localDB, {
+mongoose.connect(liveDB, {
   // useNewUrlParser: true
 }).then(() => {
   console.log("connected to database");

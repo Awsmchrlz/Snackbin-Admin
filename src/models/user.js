@@ -31,14 +31,10 @@ const UserSchema = new _mongoose.default.Schema({
     type: Array,
     required: false
   },
-  email: {
-    type: String,
-    required: false
-  },
   accountStatus:{
     type: String,
     required: false,
-    default:"Pending"
+    default:"active"
   }
 });
 const User = _mongoose.default.model('User', UserSchema);

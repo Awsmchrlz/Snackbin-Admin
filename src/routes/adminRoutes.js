@@ -316,6 +316,31 @@ router.post('/setSupplierMessage', (req, res) => {
   });
 });
 
+
+router.post("/updateOrder", async (req, res) => {
+  const {
+  
+    orderId,
+    orderState,
+  } = req.body;
+  const order = await Order.findOne({ _id: orderId });
+
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+  // console.log(order)
+  if (orderState == "erase") {
+    order.orderStatus = orderState;
+    order.deleted = true;
+  } else {
+    order.orderStatus = orderState;
+  }
+
+  await order.save();
+
+  res.status(200).json({ message: "Order updated successfully" });
+});
+
 router.post('/createSupplier', async (req, res) => {
   const {
     supplierName,
@@ -406,6 +431,51 @@ router.post('/DeliveryPerson', async (req, res) => {
     res.json(err);
   });
 });
+
+router.post('/deleteUser', async(req, res)=>{
+  const {userId}= req.body;
+
+  User.deleteOne({_id:userId}).then((done)=>{
+    res.redirect('/admin');
+  }).catch((err)=>{
+    res.send(err)
+  })
+
+})
+
+
+router.post('/disableUser', async(req, res)=>{
+  const {userId}= req.body;
+  User.find({}).then((users)=>{
+    console.log(users)
+  }) 
+  User.updateOne({_id:userId}, {
+    $set:{
+      accountStatus:"disabled"
+    }
+  }).then((done)=>{
+    res.redirect('/admin');
+  }).catch((err)=>{
+    res.send(err)
+  })
+
+})
+
+
+router.post('/activateUser', async(req, res)=>{
+  const {userId}= req.body;
+  
+  User.updateOne({_id:userId}, {
+    $set:{
+      accountStatus:"active"
+    }
+  }).then((done)=>{
+    res.redirect('/admin');
+  }).catch((err)=>{
+    res.send(err)
+  })
+
+})
 
 
 function deleteFiles(filePaths) {

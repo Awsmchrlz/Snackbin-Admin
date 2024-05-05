@@ -187,3 +187,33 @@ align-items: center;
  .users{
     width: 85%;
  }
+
+ .systemStats{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  
+ }
+ .systemStats div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    
+ }
+
+ .systemStats h3{
+    font-size: 20px;
+    color: white;
+    text-align: left;
+   width: 80%;
+ }
+
+ .systemStats span{
+    font-size:15px;
+    color:#ffc313;
+    text-align: right;
+    width: 20%;
+ }

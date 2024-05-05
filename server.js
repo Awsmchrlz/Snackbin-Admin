@@ -49,7 +49,7 @@ const liveDB = "mongodb+srv://tongabull:tongabullpassword@cluster0.l0puhny.mongo
 const localDB = 'mongodb://localhost:27017/tongabull'
 mongoose.set('strictQuery', true);
 
-mongoose.connect(liveDB, {
+mongoose.connect(localDB, {
   // useNewUrlParser: true
 }).then(() => {
   console.log("connected to database");

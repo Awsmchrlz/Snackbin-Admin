@@ -76,6 +76,101 @@ router.get('/', async(req, res) => {
   const deliveryPeople = await DeliveryPerson.find({}).lean()
   const products = await Product.find({}).lean();
 
+const usersCount = await User.countDocuments()
+
+const completedOrders = await Order.find({orderStatus:"Completed"})
+
+const totalOrdersCount = Order.countDocuments();
+
+const totalCashFromProducts = await Order.aggregate([
+  { $match: { orderStatus: "Pending" } },
+  { $group: { _id: null, total: { $sum: "$orderPrice" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+
+
+const totalEarningsForDeliverers = await Order.aggregate([
+  { $match: { orderStatus: "Completed" } },
+  { $group: { _id: null, total: { $sum: "$deliveryCharge" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+
+const totalCashPendingFromDeliveries = await Order.aggregate([
+  { $match: { orderStatus: "Pending" } },
+  { $group: { _id: null, total: { $sum: "$deliveryCharge" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+
+const totalTipsPending = await Order.aggregate([
+  { $match: { orderStatus: "Pending" } },
+  { $group: { _id: null, total: { $sum: "$tipAmount" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+const totalTips = await Order.aggregate([
+  { $match: { orderStatus: "Completed" } },
+  { $group: { _id: null, total: { $sum: "$tipAmount" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+
+const totalCashPending  = await Order.aggregate([
+  { $match: { orderStatus: "Pending" } },
+  { $group: { _id: null, total: { $sum: "$totalCost" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+
+const totalCashFromPendingOrders = await Order.aggregate([
+  { $match: { orderStatus: "Pending" } },
+  { $unwind: "$cartItems" },
+  { $group: { _id: null, total: { $sum: "$orderPrice" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+
+const totalCashTransacted = await Order.aggregate([
+  { $match: { orderStatus: "Completed" } },
+  { $group: { _id: null, total: { $sum: "$totalCost" } } }
+]).then(result => {
+  if (result.length > 0) {
+    return result[0].total;
+  } else {
+    return 0; // or any default value you want
+  }
+})
+
 
   const supplierCount = suppliers.length;
   const userCount = users.length;
@@ -94,7 +189,7 @@ router.get('/', async(req, res) => {
     const canceledOrders =await Order.find({
       $and: [
           { orderStatus: "Cancelled" },
-          { deleted: false } // Check if the 'deleted' attribute exists
+       // Check if the 'deleted' attribute exists
       ]
   }).lean();
 
@@ -114,8 +209,13 @@ router.get('/', async(req, res) => {
 
   
   console.log(pendingOrders)
+const pendingOrdersCount = pendingOrders.length
+const completedOrdersCount = completedOrders.length
+const canceledOrdersCount = canceledOrders.length       
+const deletedOrdersCount = deletedOrders.length       
 
-        res.render('admin', {
+
+res.render('admin', {
           style: "admin.css",
           script: "admin",
           pendingOrders,
@@ -130,7 +230,21 @@ router.get('/', async(req, res) => {
           userCount,
           supplierCount,
           deliveryPersonCount,
-          productCount
+          productCount,
+          usersCount,
+          totalCashFromProducts,
+          totalEarningsForDeliverers,
+          totalCashTransacted,
+          completedOrdersCount,
+          canceledOrdersCount,
+          deletedOrdersCount,
+          pendingOrdersCount,
+          totalOrdersCount,
+          totalCashFromPendingOrders,
+          totalEarningsForDeliverers,
+totalCashPendingFromDeliveries,
+totalCashPending,totalCashTransacted,totalTipsPending, 
+totalTips
         });
       });
     

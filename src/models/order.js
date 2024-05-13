@@ -50,6 +50,11 @@ const OrderSchema = new _mongoose.default.Schema({
     type: Number,
     required: 0,
   },
+  totalCost:{
+    type:Number,
+    required:false,
+    default:0
+  },
   supplierIds: {
     required: true,
     type: Array,

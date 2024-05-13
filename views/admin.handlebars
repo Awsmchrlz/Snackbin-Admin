@@ -1,4 +1,10 @@
-
+<style>
+  hr{
+    color: wheat;
+    border: 1px solid wheat;
+    width: 140%;
+  }
+</style>
 <div style="margin-top: 10%; font-size:26px; text-align:center;">Snackbin
   
   Central Control🛠</div>
@@ -612,17 +618,37 @@
   </nav>
   <br>
   <div class="systemStats">
-<div><h3>Total Users </h3> <span>40</span></div>
-<div><h3>Total Suppliers </h3> <span>40</span></div>
-<div><h3>Total Deliverers </h3> <span>40</span></div>
-<div><h3>Total Products </h3> <span>40</span></div>
-<div><h3>Total Pending Orders </h3> <span>40</span></div>
-<div><h3>Total Completed Orders </h3> <span>40</span></div>
-<div><h3>Total Deleted Orders </h3> <span>40</span></div>
-<div><h3>Total Cancelled Orders </h3> <span>40</span></div>
-<div><h3>Completed Orders Total </h3> <span>40</span></div>
-<div><h3>Completed Deliveries Total </h3> <span>40</span></div>
-<div><h3>All Cash Transacted </h3> <span>40</span></div>
+<div><h3>Users </h3> <span>=</span><span>{{usersCount}}</span></div>
+<hr>
+<div><h3>Suppliers </h3><span>=</span><span>{{supplierCount}}</span></div>
+<hr>
+<div><h3>Deliverers </h3> <span>=</span><span>{{deliveryPersonCount}}</span></div>
+<hr>
+<div><h3>Products </h3><span>=</span> <span>{{productCount}}</span></div>
+<hr>
+<div><h3>Pending </h3><span>=</span> <span>{{pendingOrdersCount}}</span></div>
+<hr>
+<div><h3>Completed </h3><span>=</span> <span>{{{completedOrdersCount}}}</span></div>
+<hr>
+<div><h3>Deleted </h3> <span>=</span><span>{{deletedOrdersCount}}</span></div>
+<hr>
+<div><h3>Cancelled</h3><span>=</span> <span>{{canceledOrdersCount}}</span></div>
+<hr>
+<div><h3>Sales </h3><span>=</span> <span>{{totalCashFromProducts}}</span></div>
+<hr>
+<div><h3>Pending Deliveries </h3> <span> = </span><span>{{totalCashPendingFromDeliveries}}</span></div>
+<hr>
+<div><h3>Cash Deliveries </h3> <span> = </span><span>{{totalEarningsForDeliverers}}</span></div>
+<hr>
+<div><h3>Total tips Pending</h3> <span>=</span><span>{{totalTipsPending}}</span></div>
+<hr>
+<div><h3>Total tips</h3> <span>=</span><span>{{totalTips}}</span></div>
+<hr>
+<div><h3>Cash  Pending</h3> <span>=</span><span>{{totalCashPending}}</span></div>
+<hr>
+<div><h3>Completed Cash</h3> <span>=</span><span>{{totalCashTransacted}}</span></div>
+
+
 
   </div>
 </div>

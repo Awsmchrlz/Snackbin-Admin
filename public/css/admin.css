@@ -5,7 +5,7 @@
 body {
     box-sizing: border-box;
     justify-content: center;
-
+    overflow-y: scroll !important;
 }
 
 nav {
@@ -93,7 +93,7 @@ textarea {
 div.screenbutton{
     border: none;
     background-color: #ffc313;
-    
+    width: 100%;
 }
 
 .scrollable{
@@ -218,3 +218,36 @@ align-items: center;
     text-align: right;
     width: 20%;
  }
+
+ .userButtonHolder{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+ }
+
+.canvasContainer{
+    position: relative;
+    min-height: fit-content;
+    width: fit-content;
+    
+    overflow-y: auto !important;
+}
+ #allStats{
+    overflow: scroll;
+ }
+ .chart-container{
+width: 100%;
+height: fit-content;
+ }
+.canvasContainer,.chart-container, canvas{
+    
+    position: relative;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+canvas{
+    width: 100%;
+    height: 300px;
+}

@@ -205,8 +205,6 @@ function checkFields() {
     } else {
         productClass.style.border = `1px solid lime`
     }
-
-
 }
 
 
@@ -219,7 +217,7 @@ async function updateOrder(orderId, orderState) {
         },
         body: JSON.stringify({ orderId, orderState })
     }
-    const res = await fetch('/updateOrder', options);
+    const res = await fetch('admin/updateOrder', options);
     const data = await res.json()
     console.log(data)
 }
@@ -316,3 +314,9 @@ eraseButtons.forEach(eraseButton => {
 setTimeout(() => {
     document.getElementById('onSubmitResponse').classList.add('hideRes')
 }, 4500)
+
+
+
+
+
+

@@ -24,6 +24,7 @@ require('dotenv').config();
 const app = (0, _express.default)();
 const port = 3001 ;
 
+const MongoStore = require('connect-mongo');
 
 
 
@@ -47,9 +48,10 @@ const { ensureAdminAuthenticated } = require("./config/auth");
 const MONGO_DB_URL =  process.env.MONGO_DB_URL
 const liveDB = "mongodb+srv://tongabull:tongabullpassword@cluster0.l0puhny.mongodb.net/?retryWrites=true&w=majority"
 const localDB = 'mongodb://localhost:27017/tongabull'
+const mainDB = liveDB
 mongoose.set('strictQuery', true);
 
-mongoose.connect(liveDB, {
+mongoose.connect(mainDB, {
   // useNewUrlParser: true
 }).then(() => {
   console.log("connected to database");
@@ -72,15 +74,20 @@ app.use(_bodyParser.default.urlencoded({
   extended: true
 }));
 
-
 app.use(
   session({
-    secret: "mysecret",
+    secret: process.env.SESSION_SECRET || "mysecret",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: mainDB,
+      collectionName: 'sessions'
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 // 1 day
+    }
   })
 );
-
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());

@@ -5,9 +5,7 @@
     width: 140%;
   }
 </style>
-<div style="margin-top: 10%; font-size:26px; text-align:center;">Snackbin
-  
-  Central Control🛠</div>
+<div style="margin-top: 10%; font-size:26px; text-align:center;">SnackbinCentral Control🛠</div>
 
 <h3 id="onSubmitResponse">{{response}}</h3>
 
@@ -27,6 +25,7 @@
   <h3 style="text-align: start; min-width: 100%;">Orders</h3>
   <div class="screenButton" id="processed">Processed<br />👍</div>
   <div class="screenButton" id="pending">Pending<br />⏳</div>
+  <div class="screenButton" id="test">Test<br />🛠</div>
   <div class="screenButton" id="cancelled">Cancelled<br />❌</div>
   <div class="screenButton" id="deleted">Deleted<br />🚮</div>
 
@@ -34,8 +33,10 @@
   <div class="screenButton" id="allStats">All Statistics<br />💸</div>
   <div class="screenButton" id=""><a href="/">Logout<br /> 🏠</a></div>
 
+
 </div>
- 
+
+
 <div class="screen" id="processed">
   <nav>
     <div>
@@ -59,7 +60,9 @@
           </div>
           <br>
           <div>
-            <h3>Cost <div>K{{orderPrice}}</div></h3>
+            <h3>Order Cost <div>K{{orderPrice}}</div></h3>
+            <h3>Delivery Charge <div>K{{deliveryCharge}}</div></h3>
+            <h3>Total Cost<div>K{{totalCost}}</div></h3>
             
           </div>
           <div>
@@ -176,6 +179,81 @@
     {{/each}}
   </div>
 </div>
+
+
+
+
+
+
+<div class="screen" id="test">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Test Orders</div>
+  </nav>
+
+  <div style="overflow-y: auto;" class="productContainer">
+    {{#each testOrders}}
+      <div class="orderItem">
+        <span>
+          <div>
+            <h3>Detail</h3>
+            <span>
+              {{#each Cart}}
+                x{{quantity}}
+                {{productName}},
+              {{/each}}
+            </span>
+          </div>
+          <br>
+          <div>
+            <h3>Cost <div>K{{orderPrice}}</div></h3>
+            
+          </div>
+          <div>
+            <div>Name: {{userName}}</div>
+          <div>Phone: {{phoneNumber}}</div>
+          </div>
+        </span>
+        <span>
+          <div>
+            <h3>Status</h3>
+            <span>{{orderStatus}}</span>
+          </div>
+             <div>
+              {{#if delivery}}
+
+            <h3>Delivery Address</h3>
+            <div>{{deliveryAddress}}</div>
+              {{/if}}
+              
+          </div>
+              
+         
+          <button class="deleteButton" id="{{_id}}">Delete</button>
+          <button class="eraseButton" id="{{_id}}">Erase</button>
+          
+        </span>
+        <span id={{userId}}>
+
+       <div>
+         <h3>Order Notes</h3>
+          <h5>"{{orderNotes}}"</h5>
+          <div>
+            <h3>Time</h3>
+            <span>{{timeStamp}}</span>
+          </div>
+       </div>
+          
+        </span>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+
 
 <div class="screen" id="cancelled">
   <nav>
@@ -618,39 +696,125 @@
   </nav>
   <br>
   <div class="systemStats">
-<div><h3>Users </h3> <span>=</span><span>{{usersCount}}</span></div>
-<hr>
-<div><h3>Suppliers </h3><span>=</span><span>{{supplierCount}}</span></div>
-<hr>
-<div><h3>Deliverers </h3> <span>=</span><span>{{deliveryPersonCount}}</span></div>
-<hr>
-<div><h3>Products </h3><span>=</span> <span>{{productCount}}</span></div>
-<hr>
-<div><h3>Pending </h3><span>=</span> <span>{{pendingOrdersCount}}</span></div>
-<hr>
-<div><h3>Completed </h3><span>=</span> <span>{{{completedOrdersCount}}}</span></div>
-<hr>
-<div><h3>Deleted </h3> <span>=</span><span>{{deletedOrdersCount}}</span></div>
-<hr>
-<div><h3>Cancelled</h3><span>=</span> <span>{{canceledOrdersCount}}</span></div>
-<hr>
-<div><h3>Sales </h3><span>=</span> <span>{{totalCashFromProducts}}</span></div>
-<hr>
-<div><h3>Pending Deliveries </h3> <span> = </span><span>{{totalCashPendingFromDeliveries}}</span></div>
-<hr>
-<div><h3>Cash Deliveries </h3> <span> = </span><span>{{totalEarningsForDeliverers}}</span></div>
-<hr>
-<div><h3>Total tips Pending</h3> <span>=</span><span>{{totalTipsPending}}</span></div>
-<hr>
-<div><h3>Total tips</h3> <span>=</span><span>{{totalTips}}</span></div>
-<hr>
-<div><h3>Cash  Pending</h3> <span>=</span><span>{{totalCashPending}}</span></div>
-<hr>
-<div><h3>Completed Cash</h3> <span>=</span><span>{{totalCashTransacted}}</span></div>
-
-
-
+  <div>
+    <h3>👥 Total Number of Users</h3> 
+    <span>=</span> 
+    <span>{{usersCount}}</span>
   </div>
+  <hr>
+  
+  <div>
+    <h3>🏭 Total Number of Suppliers</h3> 
+    <span>=</span> 
+    <span>{{supplierCount}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>🚚 Total Number of Delivery People</h3> 
+    <span>=</span> 
+    <span>{{deliveryPersonCount}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>📦 Total Number of Products</h3> 
+    <span>=</span> 
+    <span>{{productCount}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>⏳ Total Pending Orders</h3> 
+    <span>=</span> 
+    <span>{{pendingOrdersCount}}</span>
+  </div>
+  <hr>
+   <div>
+    <h3> Total Number Of Test Orders</h3> 
+    <span>=</span> 
+    <span>{{testOrdersCount}}</span>
+  </div>
+  <hr>
+  <div>
+    <h3>✅ Total Completed Orders</h3> 
+    <span>=</span> 
+    <span>{{completedOrdersCount}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>🗑️ Total Deleted Orders</h3> 
+    <span>=</span> 
+    <span>{{deletedOrdersCount}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>❌ Total Cancelled Orders</h3> 
+    <span>=</span> 
+    <span>{{canceledOrdersCount}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>💰 Total Sales from Products </h3> 
+    <span>=</span> 
+    <span>💰K{{totalCashFromProducts}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>🚚💸 Total Cash Pending from Deliveries </h3> 
+    <span>=</span> 
+    <span>💰K{{totalCashPendingFromDeliveries}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>💵 Total Earnings for Deliverers </h3> 
+    <span>=</span> 
+    <span>💰K{{totalEarningsForDeliverers}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>💸 Total Cash from Tips </h3> 
+    <span>=</span> 
+    <span>💰K{{totalTips}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>🕒 Total Cost of Pending Orders </h3> 
+    <span>=</span> 
+    <span>💰K{{totalCashPending}}</span>
+  </div>
+  <hr>
+  
+  <div>
+    <h3>📈💰 Cash Volume Transacted from Completed Orders </h3> 
+    <span>=</span> 
+    <span>💰K{{totalCashTransacted}}</span>
+  </div>
+<br>
+</div>
+<br>
+<hr>
+ <div class="dashboard-charts">
+  <div class="chart-container">
+    <canvas id="userStatsChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="orderStatsChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="financialStatsChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="salesOverTimeChart"></canvas>
+  </div>
+</div>
 </div>
 
 <div class="screen" id="sendPromoMessages">
@@ -853,3 +1017,155 @@
 </div>
 
 <div class="overLay"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+
+<script>
+  // Prepare the sales over time data
+  const salesOverTimeData = {
+    labels: [{{#each salesOverTime}}"{{this._id}}",{{/each}}],
+    data: [{{#each salesOverTime}}{{this.totalSales}},{{/each}}]
+  };
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // User Statistics Chart
+  new Chart(document.getElementById('userStatsChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Users', 'Suppliers', 'Delivery People'],
+      datasets: [{
+        label: 'number of users',
+        data: [{{usersCount}}, {{supplierCount}}, {{deliveryPersonCount}}],
+        backgroundColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)']
+      }]
+    },
+    options: {
+      responsive: true,
+      
+      plugins: {
+        legend: {
+          labels: {
+            font: {
+              size: 22
+            }
+          }
+        },
+        title: {
+          display: true,
+          text: 'User Statistics',
+          font: {
+            size: 26
+          }
+        }
+      }
+    }
+  });
+
+  // Order Statistics Chart
+  new Chart(document.getElementById('orderStatsChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Pending', 'Completed', 'Canceled', 'Deleted', 'Accepted','Tests'],
+      datasets: [{
+        data: [{{pendingOrdersCount}}, {{completedOrdersCount}}, {{canceledOrdersCount}}, {{deletedOrdersCount}}, {{acceptedOrdersCount}},{{testOrdersCount}}],
+        backgroundColor: ['rgba(255, 206, 86, 0.8)', 'rgba(75, 192, 192, 0.8)', 'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(153, 102, 255, 0.8)','rgba(113, 112, 25, 1)']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: {
+            font: {
+              size: 22
+            }
+          }
+        },
+        title: {
+          display: true,
+          text: 'Order Statistics',
+          font: {
+            size: 26
+          }
+        }
+      }
+    }
+  });
+
+  // Financial Statistics Chart
+   new Chart(document.getElementById('financialStatsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Sales From Products', 'Total Cash Pending','Total Cash Pending From Deliveries','Total Cash Transacted','Total Earnings from Deliveries'],
+                datasets: [{
+
+
+                    label: 'Amount',
+                    data: [{{totalCashFromProducts}},{{totalCashPending}},{{totalCashPendingFromDeliveries}},{{totalCashTransacted}},{{totalEarningsForDeliverers}}],
+                    backgroundColor: ['rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Financial Statistics'
+                    }
+                }
+            }
+        });
+
+  
+  // Sales Over Time Chart (using actual data)
+  new Chart(document.getElementById('salesOverTimeChart'), {
+    type: 'line',
+    data: {
+      labels: salesOverTimeData.labels,
+      datasets: [{
+        label: 'Sales',
+        data: salesOverTimeData.data,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+  
+      plugins: {
+        legend: {
+          labels: {
+            font: {
+              size: 22
+            }
+          }
+        },
+        title: {
+          display: true,
+          text: 'Sales Over Time',
+          font: {
+            size: 26
+          }
+        }
+      }
+    }
+  });
+});
+</script>
+{{!-- 
+<script>
+  // Inject the sales over time data
+  const salesOverTimeData = {
+    labels: [{{#each salesOverTime}}"{{this._id}}",{{/each}}],
+    datasets: [{
+      label: 'Sales',
+      data: [{{#each salesOverTime}}{{this.totalSales}},{{/each}}],
+      borderColor: 'rgba(75, 192, 192, 1)',
+      tension: 0.1
+    }]
+  };
+</script> --}}

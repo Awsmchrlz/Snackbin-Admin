@@ -82,6 +82,16 @@ const completedOrders = await Order.find({orderStatus:"Completed"})
 
 const totalOrdersCount = Order.countDocuments();
 
+const salesOverTime = await Order.aggregate([
+  { $match: { orderStatus: "Completed" } },
+  {
+    $group: {
+      _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+      totalSales: { $sum: "$totalCost" }
+    }
+  },
+  { $sort: { _id: 1 } }
+]);
 const totalCashFromProducts = await Order.aggregate([
   { $match: { orderStatus: "Pending" } },
   { $group: { _id: null, total: { $sum: "$orderPrice" } } }
@@ -186,16 +196,25 @@ const totalCashTransacted = await Order.aggregate([
       ]
   }).lean();
 
+    
+  const testOrders = await Order.find({
+    $and: [
+        { orderStatus: "Test" },
+        { deleted: false } // Check if the 'deleted' attribute exists
+    ]
+}).lean();
+
     const canceledOrders =await Order.find({
       $and: [
           { orderStatus: "Cancelled" },
+          { deleted: false } 
        // Check if the 'deleted' attribute exists
       ]
   }).lean();
 
     const processedOrders = await Order.find({
       $and: [
-          { orderStatus: "Processed" },
+          { orderStatus: "Completed" },
           { deleted: false } // Check if the 'deleted' attribute exists
       ]
   }).lean();
@@ -207,12 +226,23 @@ const totalCashTransacted = await Order.aggregate([
     ]
 }).lean();
 
+
+const acceptedOrders = await Order.find({
+  $and: [
+      { orderStatus: "Accepted" },
+      { deleted: false } // Check if the 'deleted' attribute exists
+  ]
+}).lean();
+
+
   
-  console.log(pendingOrders)
+console.log(pendingOrders)
 const pendingOrdersCount = pendingOrders.length
 const completedOrdersCount = completedOrders.length
 const canceledOrdersCount = canceledOrders.length       
 const deletedOrdersCount = deletedOrders.length       
+const acceptedOrdersCount = acceptedOrders.length       
+const testOrdersCount = testOrders.length       
 
 
 res.render('admin', {
@@ -221,6 +251,7 @@ res.render('admin', {
           pendingOrders,
           deletedOrders,
           canceledOrders,
+          acceptedOrders,
           messages,
           users,
           products,
@@ -239,12 +270,16 @@ res.render('admin', {
           canceledOrdersCount,
           deletedOrdersCount,
           pendingOrdersCount,
+          acceptedOrdersCount,
           totalOrdersCount,
           totalCashFromPendingOrders,
           totalEarningsForDeliverers,
 totalCashPendingFromDeliveries,
 totalCashPending,totalCashTransacted,totalTipsPending, 
-totalTips
+totalTips,
+salesOverTime,
+testOrders,
+testOrdersCount
         });
       });
     
@@ -442,7 +477,7 @@ router.post("/updateOrder", async (req, res) => {
   if (!order) {
     return res.status(404).json({ message: "Order not found" });
   }
-  // console.log(order)
+  console.log(order)
   if (orderState == "erase") {
     order.orderStatus = orderState;
     order.deleted = true;

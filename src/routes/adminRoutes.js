@@ -481,6 +481,7 @@ router.post("/updateOrder", async (req, res) => {
   if (orderState == "erase") {
     order.orderStatus = orderState;
     order.deleted = true;
+    order.delete();
   } else {
     order.orderStatus = orderState;
   }

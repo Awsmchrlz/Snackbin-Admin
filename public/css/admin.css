@@ -235,7 +235,7 @@ align-items: center;
     overflow-y: auto !important;
 }
  #allStats{
-    overflow: scroll;
+    overflow-y: scroll;
  }
  .chart-container{
 width: 100%;

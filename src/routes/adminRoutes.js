@@ -15,6 +15,7 @@ var _fs = _interopRequireDefault(require("fs"));
 var _uuid = require("uuid");
 var DeliveryPerson = _interopRequireDefault(require("../models/deliveryPerson.js")).default;
 const SnackbinSupplier = _interopRequireDefault(require("../models/snackbinSupplier.js")).default;
+const Alert = _interopRequireDefault(require("../models/alertSchema.js")).default;
 
 const bcrypt = require('bcrypt');
 
@@ -76,6 +77,7 @@ router.get('/', async(req, res) => {
   const deliveryPeople = await DeliveryPerson.find({}).lean()
   const products = await Product.find({}).lean();
 
+  const alerts = await Alert.find({ isRead: false }).lean().sort('-createdAt');
 const usersCount = await User.countDocuments()
 
 const completedOrders = await Order.find({orderStatus:"Completed"})
@@ -83,6 +85,7 @@ const completedOrders = await Order.find({orderStatus:"Completed"})
 const totalOrdersCount = Order.countDocuments();
 
 const salesOverTime = await Order.aggregate([
+
   { $match: { orderStatus: "Completed" } },
   {
     $group: {
@@ -279,7 +282,8 @@ totalCashPending,totalCashTransacted,totalTipsPending,
 totalTips,
 salesOverTime,
 testOrders,
-testOrdersCount
+testOrdersCount,
+alerts
         });
       });
     
@@ -326,14 +330,30 @@ router.post('/uploadItem', upload.array('photos', 3), async (req, res) => {
 });
 
 
-router.post('/deleteItem/:itemId',(req, res)=>{
 
+router.post('/deleteAlert/:itemId',(req, res)=>{
+  
+  try{
   const itemId =  req.params.itemId;
   console.log(itemId)
-  softDeleteItem(itemId)
-  res.json({response:"Order Delete"})
-  return;
-})
+  
+  Product.deleteOne({
+  _id:itemId
+  }).then(result => {
+      console.log(result);
+      // res.json({response:"product Erased"})
+  res.redirect('/admin')
+      // res.redirect('/admin');
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+    catch(error){
+     res.json({response:"error"})
+ 
+    }
+  })
+
 
 router.post('/deleteProduct/:itemId',(req, res)=>{
 
@@ -747,6 +767,37 @@ router.post('/disableDeliveryPerson/:userId',async (req,res)=>{
     }
 
 })
+
+
+router.post('/createAlert', async (req, res) => {
+  try {
+      const { message, title } = req.body;
+      const newAlert = new Alert({
+          message,
+          title
+      });
+      await newAlert.save();
+      // res.status(201).json({ message: 'Alert created successfully', alert: newAlert });
+      res.redirect('/admin')
+    } catch (error) {
+      res.status(500).json({ error: 'An error occurred while creating the alert' });
+  }
+});
+
+
+router.get('/deleteAlert/:alertId', async (req, res) => {
+  try {
+    const alertId = req.params.alertId;
+    const deletedAlert = await Alert.findByIdAndDelete(alertId);
+    if (!deletedAlert) {
+        return res.status(404).json({ error: 'Alert not found' });
+    }
+    res.redirect('/admin')
+    // res.json({ message: 'Alert deleted successfully' });
+      } catch (error) {
+      res.status(500).json({ error: 'An error occurred while creating the alert' });
+  }
+});
 
 
 async function softDeleteItem(itemId) {

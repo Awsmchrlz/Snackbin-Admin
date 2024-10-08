@@ -31,6 +31,7 @@
 
   <h3 style="text-align: start; min-width: 100%;">Stats</h3>
   <div class="screenButton" id="allStats">All Statistics<br />💸</div>
+  <div class="screenButton" id="manageAlerts">Notifications</div>
   <div class="screenButton" id=""><a href="/">Logout<br /> 🏠</a></div>
 
 
@@ -1169,3 +1170,57 @@ document.addEventListener('DOMContentLoaded', function() {
     }]
   };
 </script> --}}
+
+
+
+
+<div class="screen" id="manageAlerts">
+  <nav>
+    <div>
+      <object data="/css/svg/back.svg" type="image/svg+xml"></object>
+      <div class="homeButton"></div>
+    </div>
+    <div>Manage Notifications</div>
+  </nav>
+  <div>
+    <form
+      action="/admin/createAlert"
+      class="sendMessageContainer"
+      method="post"
+    >
+      <input type="text" placeholder="message Title" name="title" />
+     <textarea
+        name="message"
+        id="messageBody"
+        cols="35"
+        rows="40"
+        placeholder="message body"
+      ></textarea>
+      <button type="submit" id="sendMessage">
+        Create Notification
+      </button>
+    </form>
+  </div>
+  <div class="scrollable deliverersContainer">
+{{#each alerts}}
+
+<div class="deliveryPerson">
+  <br>
+  <span>Title: {{title}}</span>
+  <span>Message: {{message}}</span>
+  <span>Date: {{createdAt}}</span>
+  
+<br>
+<span>
+ 
+   
+  <form action="/admin/deleteAlert/{{_id}}" method="get">
+<button class="deleteButton">Delete</button>
+  </form>
+</span>
+</div>
+
+{{/each}}
+  </div>
+
+</div>

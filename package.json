@@ -10,17 +10,11 @@
   "author": "Awsmchrlz",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
-    "@babel/node": "^7.20.7",
-    "@babel/preset-env": "^7.20.2",
-    "babel-jest": "^23.6.0",
-    "babel-plugin-dynamic-import-node": "^2.3.3",
+    
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^6.4.1",
+
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "cloudinary": "^1.33.0",
